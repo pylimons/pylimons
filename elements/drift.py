@@ -4,7 +4,6 @@ from .element import Element
 
 class Drift(Element):
     def __init__(self, name, elmtype="drift", length=0):
-        #Element.__init__(self, name, self.__class__.__name__)
         super().__init__(name, elmtype, length)
         
     def get_transfer_matrix(self, dim=4):

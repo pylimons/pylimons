@@ -29,26 +29,13 @@ class Bunch():
         self.coordinates = np.zeros((self.dimension, self.num_particles))
     
     def generate_transverse_matched_beam_distribution(self):
-        #ax, bx, ex = self.twiss_x
-        #ay, by, ey = self.twiss_y
-        
-        #cx = (1 + ax * ax) / bx
-        #cy = (1 + ay * ay) / by
-        
+
         cov_mat = np.zeros((self.dimension, self.dimension))
         
-        cov_mat[0:2,0:2] = _get_2D_covariance_matrix(self.twiss_x, self.dimension)
-        cov_mat[2:4,2:4] = _get_2D_covariance_matrix(self.twiss_y, self.dimension)
-        
-        #cov_mat[0,0] = ex * bx
-        #cov_mat[0,1] = cov_mat[1,0] = - ex * ax
-        #cov_mat[1,1] = ex * cx
-        
-        #cov_mat[2,2] = ey * by
-        #cov_mat[2,3] = cov_mat[3,2] = - ey * ay
-        #cov_mat[3,3] = ey * cy
-    
-        mean = [np.sqrt(cov_mat[0,0]), np.sqrt(cov_mat[1,1]), np.sqrt(cov_mat[2,2]), np.sqrt(cov_mat[3,3])]
+        cov_mat[_x:_y,_x:_y] = _get_2D_covariance_matrix(self.twiss_x, self.dimension)
+        cov_mat[_y:_tau,_y:_tau] = _get_2D_covariance_matrix(self.twiss_y, self.dimension)
+            
+        mean = [np.sqrt(cov_mat[_x,_x]), np.sqrt(cov_mat[_xp,_xp]), np.sqrt(cov_mat[_y,_y]), np.sqrt(cov_mat[_yp,_yp])]
         
         part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
         
