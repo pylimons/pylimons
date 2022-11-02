@@ -1,11 +1,10 @@
 import scipy.constants as const
 
-c = const.c
-self.c = const.c                                # speed of light
-self.h = const.h                                # planck constant
-self.mu_0 = const.mu_0                          # permeability in free space
-self.epsilon_0 = const.epsilon_0                # permittivity in free space
-self.e = const.e                                # electron charge
+c = const.c                                # speed of light
+h = const.h                                # planck constant
+mu_0 = const.mu_0                          # permeability in free space
+epsilon_0 = const.epsilon_0                # permittivity in free space
+e = const.e                                # electron charge
 eV = const.eV                              # electron volt in Joules
 
 m_e = const.physical_constants['electron mass energy equivalent in MeV'][0]
