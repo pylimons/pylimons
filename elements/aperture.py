@@ -34,7 +34,7 @@ class Rectangular_aperture(Aperture):
         loss_index = []
         
         if (half_width <= 0) or (half_height <= 0):
-            print ("The radius of the circular aperture should be greater than zero", file=sys.stderr)
+            print ("The width and height of the rectangular aperture should be greater than zero", file=sys.stderr)
             return
         
         else:
@@ -75,3 +75,5 @@ class Circular_aperture(Aperture):
             loss = len(loss_index)
             
             return (new_particles, loss)
+        
+        
