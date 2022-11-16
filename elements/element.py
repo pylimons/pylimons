@@ -4,7 +4,7 @@ import numpy as np
 
 class Element(object):
     types = ["drift", "sbend", "rbend", "quadrupole", "sextupole", "octupole", "solenoid", "rfcavity", "marker"]
-    properties = ["name", "type", "length", "strength", "aperture"]
+    properties = ["name", "type", "length", "strength", "angle", "phi", "k1", "ks", "aperture"]
     
     def __init__(self, name, elmtype, length=0, strength=0):
         if elmtype.lower() not in self.__class__.types:
