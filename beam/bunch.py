@@ -35,7 +35,8 @@ class Bunch():
         cov_mat[_x:_y,_x:_y] = _get_2D_covariance_matrix(self.twiss_x, self.dimension)
         cov_mat[_y:_tau,_y:_tau] = _get_2D_covariance_matrix(self.twiss_y, self.dimension)
             
-        mean = [np.sqrt(cov_mat[_x,_x]), np.sqrt(cov_mat[_xp,_xp]), np.sqrt(cov_mat[_y,_y]), np.sqrt(cov_mat[_yp,_yp])]
+        mean = np.zeros((4,), 'd') #[np.sqrt(cov_mat[_x,_x]), np.sqrt(cov_mat[_xp,_xp]), np.sqrt(cov_mat[_y,_y]), np.sqrt(cov_mat[_yp,_yp])]
+        print (mean)
         
         part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
         
