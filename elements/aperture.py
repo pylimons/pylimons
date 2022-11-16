@@ -75,5 +75,31 @@ class Circular_aperture(Aperture):
             loss = len(loss_index)
             
             return (new_particles, loss)
+
+
+class Elliptical_aperture(Aperture):
+    def __init__(self, aperture):
+        super().__init__(aperture)
         
+    def apply_elliptical_aperture(self, particles):
+        a = self.aperture_properties["horizontal_axis"]
+        b = self.aperture_properties["vertical_axis"]
+
+        loss_index = []
         
+        if (a <= 0) or (b <= 0):
+            print ("The horizontal and vertical axes of the elliptical aperture should be greater than zero", file=sys.stderr)
+            return
+        
+        else:
+            for i in range(len(particles[1])):
+                x = particles[0, i]
+                y = particles[2, i]
+                rsquare = (x * x) / (a * a) + (y * y) / (b * b)
+                if (rsquare > 1):
+                    loss_index.append(i)
+                    
+            new_particles = np.delete(particles, loss_index, axis=1)
+            loss = len(loss_index)
+            
+            return (new_particles, loss)
