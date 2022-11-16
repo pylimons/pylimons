@@ -2,6 +2,8 @@ import sys
 import numpy as np
 from .element import Element
 
+_x, _xp, _y, _yp, _tau, _dp = range(6)
+
 class Drift(Element):
     def __init__(self, name, elmtype="drift", length=0):
         super().__init__(name, elmtype, length)
@@ -9,8 +11,8 @@ class Drift(Element):
     def get_transfer_matrix(self, dim=4):
         L = self.element_properties["length"]
         mat = np.zeros([dim, dim], dtype=float)
-        mat[0, 0] = mat[1,1] = mat[2,2] = mat[3,3] = 1
-        mat[0, 1] = mat[2,3] = L
+        mat[_x, _x] = mat[_xp, _xp] = mat[_y, _y] = mat[_yp, _yp] = 1
+        mat[_x, _xp] = mat[_y, _yp] = L
         
         #TODO
         #if dim == 6:
