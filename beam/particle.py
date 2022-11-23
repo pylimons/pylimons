@@ -52,7 +52,7 @@ class Particle():
     def update_s(self, length):
         self.s += length
     
-    def print_properties(self):
+    def print_particle_properties(self):
         print ("particle species  :", self.species)
         print ("particle charge   :", self.charge)
         print ("particle mass     :", self.mass, "MeV/c^2")

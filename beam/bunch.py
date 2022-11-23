@@ -28,8 +28,26 @@ class Bunch():
         self.particle = Particle(species, energy)
         self.state = np.zeros((self.dimension, self.num_particles))
         
+    def update_num_particles(self):
+        self.num_particles = self.state.shape[1]
+    
     def update_state(self, new_state):
         self.state = new_state
+        self.update_num_particles()
+        #self.get_emiitance()
+        #self.update_twiss_parameters()
+    
+    def get_emittance(self):
+        pass
+    
+    def update_emittance(self):
+        pass
+    
+    def get_twiss_paramters(self):
+        pass
+    
+    def update_twiss_paramters(self):
+        pass
     
     def generate_transverse_matched_beam_distribution(self):
 
@@ -78,7 +96,7 @@ class Bunch():
         
         return self.state
     
-    def print_properties(self):
+    def print_bunch_properties(self):
         print ("number of macro particles :", self.num_particles)
         print ("beta_x                    :", self.twiss_x[1], "m")
         print ("alpha_x                   :", self.twiss_x[0], "m^(1/2)")
