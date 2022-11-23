@@ -15,7 +15,7 @@ def _get_2D_covariance_matrix(twiss, dim):
     cov_mat[1,1] = e * c
     
     return (cov_mat)
-         
+
 class Bunch():
     def __init__(self, species, energy, dimension, num_particles, twiss_x, twiss_y):
         self.dimension = dimension
