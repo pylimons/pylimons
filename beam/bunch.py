@@ -38,15 +38,18 @@ class Bunch():
         #self.update_twiss_parameters()
     
     def get_emittance(self):
+        return (self.twiss_x[2], self.twiss_y[2])
         pass
     
     def update_emittance(self):
+        
         pass
     
     def get_twiss_paramters(self):
-        pass
+        return (self.twiss_x, self.twiss_y)
     
     def update_twiss_paramters(self):
+        
         pass
     
     def generate_transverse_matched_beam_distribution(self):
