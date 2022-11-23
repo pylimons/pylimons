@@ -5,8 +5,8 @@ from .element import Element
 _x, _xp, _y, _yp, _tau, _dp = range(6)
 
 class Quadrupole(Element):
-    def __init__(self, name, elmtype="drift", length=0, strength=0):
-        super().__init__(name, elmtype, length, strength)
+    def __init__(self, name, elmtype="drift", length=0, strength=0, **kwargs):
+        super().__init__(name=name, elmtype=elmtype, length=length, strength=strength, **kwargs)
         self.element_properties["k1"] = strength
         
     def get_transfer_matrix(self, dim=4):
@@ -62,4 +62,9 @@ class Quadrupole(Element):
         
         if bunch.state.shape != particles.shape:
             print ("something is wrong in propgation", file=sys.stderr)
+            
+        if self.element_properties["aperture"] == 0:
+            pass
+        else:
+            self.apply_aperture(bunch)
             

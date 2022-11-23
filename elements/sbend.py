@@ -5,8 +5,8 @@ from .element import Element
 _x, _xp, _y, _yp, _tau, _dp = range(6)
 
 class Sbend(Element):
-    def __init__(self, name, elmtype="drift", length=0, angle=0):
-        super().__init__(name, elmtype, length)
+    def __init__(self, name, elmtype="drift", length=0, angle=0, **kwargs):
+        super().__init__(name=name, elmtype=elmtype, length=length, **kwargs)
         self.element_properties['strength'] = angle
         self.element_properties['angle'] = angle
         self.element_properties['phi'] = angle * np.pi / 180
@@ -47,4 +47,9 @@ class Sbend(Element):
         
         if bunch.state.shape != particles.shape:
             print ("something is wrong in propgation", file=sys.stderr)
+            
+        if self.element_properties["aperture"] == 0:
+            pass
+        else:
+            self.apply_aperture(bunch)
             

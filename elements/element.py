@@ -42,20 +42,24 @@ class Element(object):
         else:
             print ("The property {} is not defined".format(prop.lower()))
 
-    def set_aperture_property(self, **param):
-        for k, v in param.items():
-            if k.lower() in self.__class__.aperture_properties:
-                self.aperture_attributes[k.lower()] = v
-            else:
-                print ("Not a proper aperture property", file=sys.stderr)
-
-    def get_aperture_property(self, prop):
-        if prop.lower() in self.__class__.aperture_properties:
-            print ("The aprture's {} is {}".format(prop.lower(), self.aperture_attributes[prop.lower()]))
+    def set_aperture_properties(self, param):
+        if param[0].lower() in self.__class__.aperture_types:
+            self.element_properties["aperture"] = param
         else:
-            print ("The property {} is not defined".format(prop.lower()))
+            print ("Not a proper aperture attributes", file=sys.stderr)
 
-    def print_properties(self):
+    def get_aperture_properties(self):
+        if self.element_properties["aperture"] == "Not defined":
+            return 0
+        else:
+            return self.element_properties["aperture"]
+        #if prop.lower() in self.__class__.aperture_properties:
+        #    print ("The aprture's {} is {}".format(prop.lower(), self.aperture_attributes[prop.lower()]))
+        #else:
+        #    print ("The property {} is not defined".format(prop.lower()))
+        #    return 0
+
+    def print_element_properties(self):
         print ("element name     :", self.element_properties["name"])
         print ("element type     :", self.element_properties["type"])
         print ("element length   :", self.element_properties["length"])
@@ -69,4 +73,28 @@ class Element(object):
     
     def propagate(self, bunch):
         pass
-        
+    
+    def apply_aperture(self, bunch):
+        particles = bunch.state
+        aperture_type = self.element_properties["aperture"][0].lower()
+        if aperture_type == "rectangular":
+            from elements.aperture import Rectangular_aperture
+            height = self.element_properties["aperture"][1]
+            width = self.element_properties["aperture"][2]
+            aperture = Rectangular_aperture([aperture_type, height, width])
+            new_particle_state, loss = aperture.apply_rectangular_aperture(particles)
+            bunch.update_state(new_particle_state)
+        elif aperture_type == "circular":
+            from elements.aperture import Circular_aperture
+            r = self.element_properties["aperture"][1]
+            aperture = Circular_aperture([aperture_type, r])
+            new_particle_state, loss = aperture.apply_circular_aperture(particles)
+            bunch.update_state(new_particle_state)
+        elif aperture_type == "elliptical":
+            from elements.aperture import Elliptical_aperture
+            ax = self.element_properties["aperture"][1]
+            bx = self.element_properties["aperture"][2]
+            aperture = Elliptical_aperture([aperture_type, ax, bx])
+            new_particle_state, loss = aperture.apply_elliptical_aperture(particles)
+            bunch.update_state(new_particle_state)
+            
