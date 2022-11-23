@@ -4,10 +4,9 @@ import numpy as np
 
 class Aperture():
     types = ["rectangular", "circular", "elliptical"]
-    properties = ["width", "hegith", "radius", "horizontala_axis", "vertical_axis"]
+    properties = ["width", "height", "radius", "horizontala_axis", "vertical_axis"]
     
     def __init__(self, aperture):
-        
         if len(aperture) > 1:
             if aperture[0].lower() not in self.__class__.types:
                 print ("The apeture type {} is not in the type list".format(aperture[0]), file=sys.stderr)
