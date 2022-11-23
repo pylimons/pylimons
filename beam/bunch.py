@@ -17,9 +17,10 @@ def _get_2D_covariance_matrix(twiss, dim):
     return (cov_mat)
 
 class Bunch():
-    def __init__(self, species, energy, dimension, num_particles, twiss_x, twiss_y):
+    def __init__(self, species, energy, dimension, num_particles, twiss_x, twiss_y, seednum):
         self.dimension = dimension
         self.num_particles = num_particles
+        self.seednum  = seednum
         if (self.dimension != 4) and (self.dimension != 6):
             print (self.dimension)
             print ("Dimension should be either 4 or 6", file=sys.stderr)
@@ -52,8 +53,8 @@ class Bunch():
         
         pass
     
-    def generate_transverse_matched_beam_distribution(self):
-
+    def generate_transverse_matched_beam_distribution(self, seednum):
+        self.seednum  = seednum
         cov_mat = np.zeros((self.dimension, self.dimension))
         
         cov_mat[_x:_y,_x:_y] = _get_2D_covariance_matrix(self.twiss_x, self.dimension)
@@ -61,6 +62,7 @@ class Bunch():
             
         mean = np.zeros((4,), 'd') #[np.sqrt(cov_mat[_x,_x]), np.sqrt(cov_mat[_xp,_xp]), np.sqrt(cov_mat[_y,_y]), np.sqrt(cov_mat[_yp,_yp])]
         
+        np.random.seed(seednum)
         part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
         
         self.state[_x,:] = part[_x,:]
