@@ -3,7 +3,7 @@ import numpy as np
 from utils import physical_constants as pconstants
 
 class Particle():
-    def __init__(self, species, energy):
+    def __init__(self, species, energy, charge=1):
         self.species = species
         self.energy = energy
 
@@ -19,6 +19,7 @@ class Particle():
         self.gamma = self.get_gamma()
         self.beta = self.get_beta()
         self.momentum = self.get_momentum()
+        self.s = 0
 
     def get_gamma(self):
         gamma = 1 + self.energy / self.mass
@@ -41,6 +42,15 @@ class Particle():
         self.gamma = self.get_gamma()
         self.beta = self.get_beta()
         self.momentum = self.get_momentum()
+        
+    def get_s(self):
+        return self.s
+    
+    def reset_s(self):
+        self.s = 0
+    
+    def update_s(self, length):
+        self.s += length
     
     def print_properties(self):
         print ("particle species  :", self.species)

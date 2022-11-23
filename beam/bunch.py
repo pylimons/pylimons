@@ -26,7 +26,10 @@ class Bunch():
         self.twiss_x = twiss_x
         self.twiss_y = twiss_y
         self.particle = Particle(species, energy)
-        self.coordinates = np.zeros((self.dimension, self.num_particles))
+        self.state = np.zeros((self.dimension, self.num_particles))
+        
+    def update_state(self, new_state):
+        self.state = new_state
     
     def generate_transverse_matched_beam_distribution(self):
 
@@ -40,12 +43,12 @@ class Bunch():
         
         part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
         
-        self.coordinates[_x,:] = part[_x,:]
-        self.coordinates[_xp,:] = part[_xp,:]
-        self.coordinates[_y,:] = part[_y,:]
-        self.coordinates[_yp,:] = part[_yp,:]
+        self.state[_x,:] = part[_x,:]
+        self.state[_xp,:] = part[_xp,:]
+        self.state[_y,:] = part[_y,:]
+        self.state[_yp,:] = part[_yp,:]
         
-        return self.coordinates
+        return self.state
     
     #TODO
     def generate_6D_matched_beam_distribution(self):
@@ -69,12 +72,12 @@ class Bunch():
         
         part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
         
-        self.coordinates[_x,:] = part[_x,:]
-        self.coordinates[_xp,:] = part[_xp,:]
-        self.coordinates[_y,:] = part[_y,:]
-        self.coordinates[_yp,:] = part[_yp,:]
+        self.state[_x,:] = part[_x,:]
+        self.state[_xp,:] = part[_xp,:]
+        self.state[_y,:] = part[_y,:]
+        self.state[_yp,:] = part[_yp,:]
         
-        return self.coordinates
+        return self.state
     
     def print_properties(self):
         print ("number of macro particles :", self.num_particles)
@@ -92,6 +95,7 @@ class Bunch():
         print ("particle momentum         :", self.particle.momentum, "MeV/c") 
         print ("particle gamma            :", self.particle.gamma)
         print ("particle beta             :", self.particle.beta)
+        print ("particle s                :", self.particle.s)
         
         
         
