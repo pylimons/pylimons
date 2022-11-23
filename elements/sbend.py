@@ -5,7 +5,7 @@ from .element import Element
 _x, _xp, _y, _yp, _tau, _dp = range(6)
 
 class Sbend(Element):
-    def __init__(self, name, elmtype="drift", length=0, angle=0, **kwargs):
+    def __init__(self, name, elmtype="sbend", length=0, angle=0, **kwargs):
         super().__init__(name=name, elmtype=elmtype, length=length, **kwargs)
         self.element_properties['strength'] = angle
         self.element_properties['angle'] = angle

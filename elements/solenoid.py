@@ -5,7 +5,7 @@ from .element import Element
 _x, _xp, _y, _yp, _tau, _dp = range(6)
 
 class Solenoid(Element):
-    def __init__(self, name, elmtype="drift", length=0, strength=0, **kwargs):
+    def __init__(self, name, elmtype="solenoid", length=0, strength=0, **kwargs):
         super().__init__(name=name, elmtype=elmtype, length=length, strength=strength, **kwargs)
         self.element_properties["ks"] = strength
         

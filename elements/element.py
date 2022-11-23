@@ -9,8 +9,7 @@ class Element(object):
     
     def __init__(self, name, elmtype, length=0, strength=0, aperture=[]):
         if elmtype.lower() not in self.__class__.types:
-            print (elmtype.lower())
-            print ("The element type is not in the type list", file=sys.stderr)
+            print ("The element {} type is not in the type list".format(elmtype.lower()), file=sys.stderr)
             return
 
         self.element_properties = {}
