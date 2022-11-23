@@ -67,7 +67,6 @@ class Element(object):
         new_element.element_properties["name"] = new_element_name.lower()
         return new_element
     
-    def propagate(self, particle):
+    def propagate(self, bunch):
         pass
-        
         

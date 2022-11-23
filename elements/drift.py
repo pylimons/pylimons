@@ -21,13 +21,16 @@ class Drift(Element):
         
         return mat
         
-    def propagate(self, particles):
+    def propagate(self, bunch):
+        reference_particle = bunch.particle
+        particles = bunch.state
+        
+        reference_particle.update_s(self.element_properties["length"])
+        
         transfer_map = self.get_transfer_matrix(particles.shape[0])
         
-        new_particles = transfer_map @ particles
+        bunch.update_state(transfer_map @ particles)
         
-        if new_particles.shape != particles.shape:
+        if bunch.state.shape != particles.shape:
             print ("something is wrong in propgation", file=sys.stderr)
-            
-        return new_particles
         

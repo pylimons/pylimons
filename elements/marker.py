@@ -8,6 +8,6 @@ class Marker(Element):
     def __init__(self, name, elmtype="marker"):
         super().__init__(name, elmtype)
         
-    def propagate(self, particles):
-        return particles
+    def propagate(self, bunch):
+        return bunch
         
