@@ -54,7 +54,6 @@ class Bunch():
         pass
     
     def generate_transverse_matched_beam_distribution(self, seednum):
-        self.seednum  = seednum
         cov_mat = np.zeros((self.dimension, self.dimension))
         
         cov_mat[_x:_y,_x:_y] = _get_2D_covariance_matrix(self.twiss_x, self.dimension)
