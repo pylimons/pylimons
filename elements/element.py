@@ -65,11 +65,6 @@ class Element(object):
         print ("element strength :", self.element_properties["strength"])
         print ("element aperture :", self.element_properties["aperture"])
         
-    def element_copy(self, new_element_name):
-        new_element = copy.deepcopy(self)
-        new_element.element_properties["name"] = new_element_name.lower()
-        return new_element
-    
     def propagate(self, bunch):
         pass
     
@@ -96,4 +91,29 @@ class Element(object):
             aperture = Elliptical_aperture([aperture_type, ax, bx])
             new_particle_state, loss = aperture.apply_elliptical_aperture(particles)
             bunch.update_state(new_particle_state)
+            
+    def element_copy(self, new_element_name):
+        new_element = copy.deepcopy(self)
+        new_element.element_properties["name"] = new_element_name.lower()
+        return new_element
+    
+    def slice_element(self, slicen):
+        new_length = self.element_properties["length"] / slicen
+        element_name = self.element_properties["name"]
+        element_type = self.element_properties["type"]
+        element_strength = self.element_properties["strength"]
+        if element_type == "sbend":
+            new_strength = element_strength / slicen
+        else:
+            new_strength = element_strength
+        element_list = []
+        for i in range(0, slicen):
+            new_element_name = element_name + ("_%d" % i)
+            new_element = self.element_copy(new_element_name)
+            new_element.set_element_property(length = new_length)
+            new_element.set_element_property(strength = new_strength)
+            element_list.append(new_element)
+            
+        return (element_list)
+        
             
