@@ -40,7 +40,7 @@ class Beamline(object):
                                              element.element_properties["length"], element.element_properties["strength"], length))
         
     def get_num_beamline_elements(self):
-        print (len(self.lattice))
+        return (len(self.lattice))
     
     def get_num_sliced_beamline_elements(self):
         print (len(self.sliced_lattice))

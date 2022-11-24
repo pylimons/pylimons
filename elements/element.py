@@ -52,11 +52,6 @@ class Element(object):
             return 0
         else:
             return self.element_properties["aperture"]
-        #if prop.lower() in self.__class__.aperture_properties:
-        #    print ("The aprture's {} is {}".format(prop.lower(), self.aperture_attributes[prop.lower()]))
-        #else:
-        #    print ("The property {} is not defined".format(prop.lower()))
-        #    return 0
 
     def print_element_properties(self):
         print ("element name     :", self.element_properties["name"])
