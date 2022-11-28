@@ -99,11 +99,13 @@ class Element(object):
         element_strength = self.element_properties["strength"]
         if element_type == "sbend":
             new_strength = element_strength / slicen
+            self.element_properties["angle"] = new_strength
+            self.element_properties["phi"] = new_strength * np.pi / 180
         else:
             new_strength = element_strength
         element_list = []
         for i in range(0, slicen):
-            new_element_name = element_name + ("_%d" % i)
+            new_element_name = element_name + ("_sliced_%d" % i)
             new_element = self.element_copy(new_element_name)
             new_element.set_element_property(length = new_length)
             new_element.set_element_property(strength = new_strength)
