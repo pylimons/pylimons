@@ -55,3 +55,5 @@ class Solenoid(Element):
         else:
             self.apply_aperture(bunch)
             
+        bunch.update_twiss_paramters(transfer_map)
+            

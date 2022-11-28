@@ -34,24 +34,48 @@ class Bunch():
     def update_state(self, new_state):
         self.state = new_state
         self.update_num_particles()
-        #self.get_emiitance()
-        #self.update_twiss_parameters()
+        self.update_emittance()
     
     def get_emittance(self):
         return (self.twiss_x[2], self.twiss_y[2])
-        pass
     
     def update_emittance(self):
+        #print (self.twiss_x[2])
+        sigma_x  = np.mean(self.state[_x,:]**2)
+        sigma_xp = np.mean(self.state[_xp,:]**2)
+        sigma_xxp = np.mean(self.state[_x] * self.state[_xp])
+        sigma_y  = np.mean(self.state[_y,:]**2)
+        sigma_yp = np.mean(self.state[_yp,:]**2)
+        sigma_yyp = np.mean(self.state[_y] * self.state[_yp])
         
-        pass
+        emittance_x = np.sqrt(sigma_x*sigma_xp - sigma_xxp * sigma_xxp)
+        emittance_y = np.sqrt(sigma_y*sigma_yp - sigma_yyp * sigma_yyp)
+
+        self.twiss_x[2] = emittance_x
+        self.twiss_y[2] = emittance_y
+        #print (self.twiss_x[2], emittance_x, '\n')
     
     def get_twiss_paramters(self):
         return (self.twiss_x, self.twiss_y)
     
-    def update_twiss_paramters(self):
+    def propagate_twiss_parameters(self, twiss, mat):
+        new_twiss = [0, 0, twiss[2]]
+        alpha0 = twiss[0]
+        beta0 = twiss[1]
+        gamma0 = (1 + alpha0 * alpha0) / beta0
         
-        pass
+        new_twiss[1] = beta0 * mat[_x,_x]**2 + alpha0 * (-2 * mat[_x,_x] * mat[_x,_xp]) + gamma0 * mat[_x,_xp]**2
+        new_twiss[0] = beta0 * (-mat[_x,_x] * mat[_xp,_x]) + alpha0 * (mat[_x,_x] * mat[_xp,_xp] + mat[_x,_xp] * mat[_xp,_x]) + gamma0 * (-mat[_x,_xp] * mat[_xp,_xp])
+        
+        return (new_twiss)
     
+    def update_twiss_paramters(self, transfer_map):
+        map_x = transfer_map[_x:_y, _x:_y]
+        map_y = transfer_map[_y:_tau, _y:_tau]
+
+        self.twiss_x = self.propagate_twiss_parameters(self.twiss_x, map_x)
+        self.twiss_y = self.propagate_twiss_parameters(self.twiss_y, map_y)
+        
     def generate_transverse_matched_beam_distribution(self):
 
         cov_mat = np.zeros((self.dimension, self.dimension))
@@ -67,6 +91,8 @@ class Bunch():
         self.state[_xp,:] = part[_xp,:]
         self.state[_y,:] = part[_y,:]
         self.state[_yp,:] = part[_yp,:]
+        
+        self.update_emittance()
         
         return self.state
     
