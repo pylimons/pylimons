@@ -19,7 +19,7 @@ def _get_2D_covariance_matrix(twiss, dim):
     return (cov_mat)
 
 class Bunch():
-    def __init__(self, species, energy, dimension, num_particles, twiss_x, twiss_y, seed=int(time.time())):
+    def __init__(self, species, energy, dimension, num_particles, twiss_x, twiss_y):
         self.dimension = dimension
         self.num_particles = num_particles
         self.orig_num_particles = num_particles
@@ -29,7 +29,6 @@ class Bunch():
         self.twiss_y = twiss_y
         self.particle = Particle(species, energy)
         self.state = np.zeros((self.dimension, self.num_particles))
-        self.seed = seed
     
     def get_original_num_particles(self):
         return self.orig_num_particles
@@ -85,7 +84,7 @@ class Bunch():
         self.twiss_x = self.propagate_twiss_parameters(self.twiss_x, map_x)
         self.twiss_y = self.propagate_twiss_parameters(self.twiss_y, map_y)
         
-    def generate_transverse_matched_beam_distribution(self):
+    def generate_transverse_matched_beam_distribution(self, seed=int(time.time())):
 
         cov_mat = np.zeros((self.dimension, self.dimension))
         
@@ -95,8 +94,8 @@ class Bunch():
         mean = np.zeros((4,), 'd') #[np.sqrt(cov_mat[_x,_x]), np.sqrt(cov_mat[_xp,_xp]), np.sqrt(cov_mat[_y,_y]), np.sqrt(cov_mat[_yp,_yp])]
         
         # Create a default Generator.
-        rng = np.random.default_rng(self.seed)
-        part = rng.multivariate_normal(mean, cov_mat, self.num_particles).T
+        np.random.seed(seed)
+        part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
         
         self.state[_x,:] = part[_x,:]
         self.state[_xp,:] = part[_xp,:]
