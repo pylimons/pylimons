@@ -1,9 +1,10 @@
 import sys
 import numpy as np
 from .particle import Particle
+from .utils.logs import *
 
 _x, _xp, _y, _yp, _tau, _dp = range(6)
-
+sys
 def _get_2D_covariance_matrix(twiss, dim):
     a, b, e = twiss
     c = (1 + a * a) / b
@@ -21,8 +22,7 @@ class Bunch():
         self.dimension = dimension
         self.num_particles = num_particles
         if (self.dimension != 4) and (self.dimension != 6):
-            print (self.dimension)
-            print ("Dimension should be either 4 or 6", file=sys.stderr)
+            print_error("Dimension should be either 4 or 6")
         self.twiss_x = twiss_x
         self.twiss_y = twiss_y
         self.particle = Particle(species, energy)

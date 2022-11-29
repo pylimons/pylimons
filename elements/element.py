@@ -1,6 +1,7 @@
 import sys
 import copy
 import numpy as np
+from .utils.logs import *
 
 class Element(object):
     types = ["drift", "sbend", "rbend", "quadrupole", "sextupole", "octupole", "solenoid", "rfcavity", "marker"]
@@ -9,7 +10,7 @@ class Element(object):
     
     def __init__(self, name, elmtype, length=0, strength=0, aperture=[]):
         if elmtype.lower() not in self.__class__.types:
-            print ("The element {} type is not in the type list".format(elmtype.lower()), file=sys.stderr)
+            print_error("The element {} type is not in the type list".format(elmtype.lower()))
             return
 
         self.element_properties = {}
@@ -29,11 +30,11 @@ class Element(object):
     def set_element_property(self, **param):
         for k, v in param.items():
             if k.lower() == "type":
-                print ("type cannot be changed", file=sys.stderr)
+                print_error("type cannot be changed")
             elif k.lower() in self.__class__.properties:
                 self.element_properties[k.lower()] = v
             else:
-                print ("Not a proper property", file=sys.stderr)
+                print_error("Not a proper property")
                 
     def get_element_property(self, prop):
         if prop.lower() in self.__class__.properties:
@@ -45,7 +46,7 @@ class Element(object):
         if param[0].lower() in self.__class__.aperture_types:
             self.element_properties["aperture"] = param
         else:
-            print ("Not a proper aperture attributes", file=sys.stderr)
+            print_error("Not a proper aperture attributes")
 
     def get_aperture_properties(self):
         if self.element_properties["aperture"] == "Not defined":

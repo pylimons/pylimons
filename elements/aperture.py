@@ -1,6 +1,7 @@
 import sys
 import copy
 import numpy as np
+from .utils.logs import *
 
 class Aperture():
     types = ["rectangular", "circular", "elliptical"]
@@ -9,7 +10,7 @@ class Aperture():
     def __init__(self, aperture):
         if len(aperture) > 1:
             if aperture[0].lower() not in self.__class__.types:
-                print ("The apeture type {} is not in the type list".format(aperture[0]), file=sys.stderr)
+                print_error("The apeture type {} is not in the type list".format(aperture[0]))
                 return
             else:
                 self.aperture_properties = {}
@@ -33,7 +34,7 @@ class Rectangular_aperture(Aperture):
         loss_index = []
         
         if (half_width <= 0) or (half_height <= 0):
-            print ("The width and height of the rectangular aperture should be greater than zero", file=sys.stderr)
+            print_error("The width and height of the rectangular aperture should be greater than zero")
             return
         
         else:
@@ -59,7 +60,7 @@ class Circular_aperture(Aperture):
         loss_index = []
         
         if r <= 0:
-            print ("The radius of the circular aperture should be greater than zero", file=sys.stderr)
+            print_error("The radius of the circular aperture should be greater than zero")
             return
         
         else:
@@ -87,7 +88,7 @@ class Elliptical_aperture(Aperture):
         loss_index = []
         
         if (a <= 0) or (b <= 0):
-            print ("The horizontal and vertical axes of the elliptical aperture should be greater than zero", file=sys.stderr)
+            print_error("The horizontal and vertical axes of the elliptical aperture should be greater than zero")
             return
         
         else:

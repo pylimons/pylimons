@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 from .element import Element
+from .utils.logs import *
 
 _x, _xp, _y, _yp, _tau, _dp = range(6)
 
@@ -61,7 +62,7 @@ class Quadrupole(Element):
         bunch.update_state(transfer_map @ particles)
         
         if bunch.state.shape != particles.shape:
-            print ("something is wrong in propgation", file=sys.stderr)
+            print_error("something is wrong in propgation")
             
         if self.element_properties["aperture"] == 0:
             pass

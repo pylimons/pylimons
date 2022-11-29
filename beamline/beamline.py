@@ -1,5 +1,6 @@
 import sys
 from elements import *
+from .utils.logs import *
 
 class Beamline(object):
     types = ["drift", "sbend", "rbend", "quadrupole", "sextupole", "octupole", "solenoid", "rfcavity", "marker"]
@@ -14,7 +15,7 @@ class Beamline(object):
         for element in self.lattice:
             elmtype = element.element_properties["type"]
             if elmtype not in self.__class__.types:
-                print ("The element {} type is not in the type list".format(elemtype), file=sys.stderr)
+                print_error("The element {} type is not in the type list".format(elemtype))
                 return
             
     def propagate_beamline(self, bunch):

@@ -14,7 +14,7 @@ class Particle():
             self.charge = 1
             self.mass = pconstants.m_p
         else:
-            print('Unknown species {}'.format(self.species), file=sys.stderr)
+            print_error('Unknown species {}'.format(self.species))
 
         self.gamma = self.get_gamma()
         self.beta = self.get_beta()
