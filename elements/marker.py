@@ -14,7 +14,5 @@ class Marker(Element):
         else:
             self.apply_aperture(bunch)
         
-        print (bunch.twiss_x, bunch.twiss_y)
-        
         return bunch
         
