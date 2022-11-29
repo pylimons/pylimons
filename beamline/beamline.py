@@ -1,15 +1,21 @@
 import sys
 from elements import *
+from utils.diagnostics import *
 from utils.logs import *
 
 class Beamline(object):
     types = ["drift", "sbend", "rbend", "quadrupole", "sextupole", "octupole", "solenoid", "rfcavity", "marker"]
     
-    def __init__(self, name, lattice):
+    def __init__(self, name, lattice, diag=False):
         self.name = name.lower()
         self.lattice = lattice
         self.sliced_lattice = []
         self.construct_beamline()
+        self.diag = diag
+        self.num_beamline_elements = len(self.lattice)
+        
+        if self.diag:
+            self.beamline_diagnostics = Beamline_diagnostics("beamline.h5")
         
     def construct_beamline(self):
         for element in self.lattice:
@@ -19,6 +25,8 @@ class Beamline(object):
                 return
             
     def propagate_beamline(self, bunch):
+        if self.diag:
+            self.beamline_diagnostics.save_bunch_diagnostics(bunch)
         index = 0
         length = 0
         for element in self.lattice:
@@ -34,6 +42,9 @@ class Beamline(object):
                                                    length, bunch.get_num_particles(), bunch.get_original_num_particles(), \
                                                                              emit_x*1e6, emit_y*1e6))
             index += 1
+            
+            if self.diag:
+                self.beamline_diagnostics.save_bunch_diagnostics(bunch)
             
     def propagate_sliced_beamline(self, bunch):
         for element in self.sliced_lattice:
@@ -54,7 +65,7 @@ class Beamline(object):
                                              element.element_properties["length"], element.element_properties["strength"], length))
         
     def get_num_beamline_elements(self):
-        return (len(self.lattice))
+        return (self.num_beamline_elements)
     
     def get_num_sliced_beamline_elements(self):
         print (len(self.sliced_lattice))
