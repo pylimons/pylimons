@@ -58,7 +58,7 @@ class Bunch():
         print('seed num:',seednum)
         if seednum == 0:
             # seednum = np.random
-            print('seed num set to rnadom') 
+            print('seed num set to random') 
         else:
             np.random.seed(seednum)
         cov_mat = np.zeros((self.dimension, self.dimension))
