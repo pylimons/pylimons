@@ -54,5 +54,5 @@ class Sbend(Element):
         else:
             self.apply_aperture(bunch)
             
-        bunch.update_twiss_paramters(transfer_map)
+        bunch.update_twiss_parameters(transfer_map)
             

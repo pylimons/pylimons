@@ -77,7 +77,7 @@ class Bunch():
         
         return (new_twiss)
     
-    def update_twiss_paramters(self, transfer_map):
+    def update_twiss_parameters(self, transfer_map):
         map_x = transfer_map[_x:_y, _x:_y]
         map_y = transfer_map[_y:_tau, _y:_tau]
 
