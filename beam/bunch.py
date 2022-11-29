@@ -94,8 +94,9 @@ class Bunch():
             
         mean = np.zeros((4,), 'd') #[np.sqrt(cov_mat[_x,_x]), np.sqrt(cov_mat[_xp,_xp]), np.sqrt(cov_mat[_y,_y]), np.sqrt(cov_mat[_yp,_yp])]
         
-        np.random.seed(self.seed)
-        part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
+        # Create a default Generator.
+        rng = np.random.default_rng(self.seed)
+        part = rng.multivariate_normal(mean, cov_mat, self.num_particles).T
         
         self.state[_x,:] = part[_x,:]
         self.state[_xp,:] = part[_xp,:]
