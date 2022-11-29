@@ -29,7 +29,10 @@ class Bunch():
         self.particle = Particle(species, energy)
         self.state = np.zeros((self.dimension, self.num_particles))
         self.seed = seed
-        
+    
+    def get_num_particles(self):
+        return self.num_particles
+    
     def update_num_particles(self):
         self.num_particles = self.state.shape[1]
     
