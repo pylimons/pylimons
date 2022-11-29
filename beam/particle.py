@@ -1,6 +1,7 @@
 import sys
 import numpy as np
 from utils import physical_constants as pconstants
+from utils.logs import *
 
 class Particle():
     def __init__(self, species, energy, charge=1):

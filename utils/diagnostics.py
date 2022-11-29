@@ -8,7 +8,6 @@ _x, _xp, _y, _yp, _tau, _dp = range(6)
 
 """
 def _get_dtype(data):
-    """Given a dict, generate a nested numpy dtype"""
     fields = []
     for (key, value) in data.items():
         # make strings go to the next 64 character boundary
@@ -34,8 +33,6 @@ def _recurse_row(row, base, data):
 
 
 def _add_row(table, data):
-    """Add a new row to a table based on the contents of a dict.
-    """
     row = table.row
     for k, v in data.items():
         if isinstance(v, dict):

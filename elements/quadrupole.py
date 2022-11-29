@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 from .element import Element
-from .utils.logs import *
+from utils.logs import *
 
 _x, _xp, _y, _yp, _tau, _dp = range(6)
 

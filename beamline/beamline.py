@@ -1,6 +1,6 @@
 import sys
 from elements import *
-from .utils.logs import *
+from utils.logs import *
 
 class Beamline(object):
     types = ["drift", "sbend", "rbend", "quadrupole", "sextupole", "octupole", "solenoid", "rfcavity", "marker"]

@@ -1,7 +1,7 @@
 import sys
 import copy
 import numpy as np
-from .utils.logs import *
+from utils.logs import *
 
 class Element(object):
     types = ["drift", "sbend", "rbend", "quadrupole", "sextupole", "octupole", "solenoid", "rfcavity", "marker"]
