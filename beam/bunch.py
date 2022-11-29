@@ -22,6 +22,7 @@ class Bunch():
     def __init__(self, species, energy, dimension, num_particles, twiss_x, twiss_y, seed=int(time.time())):
         self.dimension = dimension
         self.num_particles = num_particles
+        self.orig_num_particles = num_particles
         if (self.dimension != 4) and (self.dimension != 6):
             print_error("Dimension should be either 4 or 6")
         self.twiss_x = twiss_x
@@ -29,6 +30,9 @@ class Bunch():
         self.particle = Particle(species, energy)
         self.state = np.zeros((self.dimension, self.num_particles))
         self.seed = seed
+    
+    def get_original_num_particles(self):
+        return self.orig_num_particles
     
     def get_num_particles(self):
         return self.num_particles
