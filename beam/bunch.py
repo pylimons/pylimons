@@ -1,7 +1,8 @@
 import sys
+import time
 import numpy as np
 from .particle import Particle
-from .utils.logs import *
+from utils.logs import *
 
 _x, _xp, _y, _yp, _tau, _dp = range(6)
 sys
@@ -18,7 +19,7 @@ def _get_2D_covariance_matrix(twiss, dim):
     return (cov_mat)
 
 class Bunch():
-    def __init__(self, species, energy, dimension, num_particles, twiss_x, twiss_y):
+    def __init__(self, species, energy, dimension, num_particles, twiss_x, twiss_y, seed=int(time.time())):
         self.dimension = dimension
         self.num_particles = num_particles
         if (self.dimension != 4) and (self.dimension != 6):
@@ -27,6 +28,7 @@ class Bunch():
         self.twiss_y = twiss_y
         self.particle = Particle(species, energy)
         self.state = np.zeros((self.dimension, self.num_particles))
+        self.seed = seed
         
     def update_num_particles(self):
         self.num_particles = self.state.shape[1]
@@ -85,6 +87,7 @@ class Bunch():
             
         mean = np.zeros((4,), 'd') #[np.sqrt(cov_mat[_x,_x]), np.sqrt(cov_mat[_xp,_xp]), np.sqrt(cov_mat[_y,_y]), np.sqrt(cov_mat[_yp,_yp])]
         
+        np.random.seed(self.seed)
         part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
         
         self.state[_x,:] = part[_x,:]
