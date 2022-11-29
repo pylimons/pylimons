@@ -57,8 +57,10 @@ class Bunch():
         self.seednum  = seednum
         print('seed num:',seednum)
         if seednum == 0:
-            seednum = np.random
-            print('seed num set to rnadom')  
+            # seednum = np.random
+            print('seed num set to rnadom') 
+        else:
+            np.random.seed(seednum)
         cov_mat = np.zeros((self.dimension, self.dimension))
         
         cov_mat[_x:_y,_x:_y] = _get_2D_covariance_matrix(self.twiss_x, self.dimension)
@@ -66,7 +68,7 @@ class Bunch():
             
         mean = np.zeros((4,), 'd') #[np.sqrt(cov_mat[_x,_x]), np.sqrt(cov_mat[_xp,_xp]), np.sqrt(cov_mat[_y,_y]), np.sqrt(cov_mat[_yp,_yp])]
         
-        np.random.seed(seednum)
+  
         part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
         
         self.state[_x,:] = part[_x,:]
