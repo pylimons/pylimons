@@ -56,6 +56,7 @@ class Bunch():
     
     def generate_transverse_matched_beam_distribution(self):
         self.seednum  = seednum
+        print('seed num:',seednum)
         if seednum == 0:
             seednum = np.randum  
         cov_mat = np.zeros((self.dimension, self.dimension))
