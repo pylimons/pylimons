@@ -104,8 +104,15 @@ class Element(object):
         element_strength = self.element_properties["strength"]
         if element_type == "sbend":
             new_strength = element_strength / slicen
+            self.element_properties["angle"] = new_strength
+            self.element_properties["phi"] = new_strength * np.pi/180
+
+        elif element_type =="solenoid":
+            new_strength = element_strength
         else:
             new_strength = element_strength
+
+        
         element_list = []
         for i in range(0, slicen):
             new_element_name = element_name + ("_%d" % i)

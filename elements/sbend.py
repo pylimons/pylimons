@@ -133,7 +133,7 @@ class Sbend(Element):
         
         reference_particle.update_s(self.element_properties["length"])
         
-        transfer_map = self.s_get_transfer_matrix(particles.shape[0])
+        transfer_map = self.get_transfer_matrix(particles.shape[0])
         
         bunch.update_state(transfer_map @ particles)
         
