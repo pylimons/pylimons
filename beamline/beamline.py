@@ -21,9 +21,15 @@ class Beamline(object):
         for element in self.lattice:
             element.propagate(bunch)
             
-    def propagate_sliced_beamline(self, bunch):
+    def propagate_sliced_beamline(self, bunch, slincen):
         for element in self.sliced_lattice:
-            element.propagate(bunch)
+            print(element.print_element_properties())
+            if element.element_properties["type"] == 'sbend' and slincen != 1:
+                element.s_propagate(bunch)
+            else:
+                element.propagate(bunch)
+
+            
             
     def print_beamline(self):
         length = 0
@@ -38,7 +44,7 @@ class Beamline(object):
             length += element.element_properties["length"]
             print ("%5s %10s %6.3f %6.3f %6.3f" % (element.element_properties["name"], element.element_properties["type"], \
                                              element.element_properties["length"], element.element_properties["strength"], length))
-        
+
     def get_num_beamline_elements(self):
         print (len(self.lattice))
     

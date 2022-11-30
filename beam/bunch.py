@@ -124,6 +124,6 @@ class Bunch():
         print ("particle gamma            :", self.particle.gamma)
         print ("particle beta             :", self.particle.beta)
         print ("particle s                :", self.particle.s)
-        
+        print (self.state[_x,:])
         
         
