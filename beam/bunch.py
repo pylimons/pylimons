@@ -97,7 +97,7 @@ class Bunch():
         return self.state
     
     #TODO
-    def generate_6D_matched_beam_distribution(self):
+    def generate_6D_matched_beam_distribution(self, seed_no=None):
         ax, bx, ex = self.twiss_x
         ay, by, ey = self.twiss_y
         
@@ -106,16 +106,23 @@ class Bunch():
         
         cov_mat = np.zeros((self.dimension, self.dimension))
         
-        cov_mat[0,0] = ex * bx
-        cov_mat[0,1] = cov_mat[1,0] = - ex * ax
-        cov_mat[1,1] = ex * cx
+        cov_mat[0, 0] = ex * bx
+        cov_mat[0, 1] = cov_mat[1, 0] = - ex * ax
+        cov_mat[1, 1] = ex * cx
         
-        cov_mat[2,2] = ey * by
-        cov_mat[2,3] = cov_mat[3,2] = - ey * ay
-        cov_mat[3,3] = ey * cy
+        cov_mat[2, 2] = ey * by
+        cov_mat[2, 3] = cov_mat[3, 2] = - ey * ay
+        cov_mat[3, 3] = ey * cy
     
-        mean = [np.sqrt(cov_mat[0,0]), np.sqrt(cov_mat[1,1]), np.sqrt(cov_mat[2,2]), np.sqrt(cov_mat[3,3])]
-        
+        mean = [np.sqrt(cov_mat[0, 0]), np.sqrt(cov_mat[1, 1]), np.sqrt(cov_mat[2, 2]), np.sqrt(cov_mat[3, 3])]
+
+        if seed_no is None:
+            pass
+        else:
+            try:
+                return np.random.seed(seed_no)
+            except:
+                print("The seed number must be an integer greater than 0 and less than 2^32-1.")
         part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
         
         self.state[_x,:] = part[_x,:]
