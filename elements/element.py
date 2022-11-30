@@ -106,6 +106,10 @@ class Element(object):
             new_strength = element_strength / slicen
         else:
             new_strength = element_strength
+        if element_type == "solenoid":
+            new_strength = element_strength / slicen
+        else:
+            new_strength = element_strength
         element_list = []
         for i in range(0, slicen):
             new_element_name = element_name + ("_%d" % i)
