@@ -64,8 +64,8 @@ class Bunch():
         beta0 = twiss[1]
         gamma0 = (1 + alpha0 * alpha0) / beta0
         
-        new_twiss[1] = beta0 * mat[_x,_x]**2 + alpha0 * (-2 * mat[_x,_x] * mat[_x,_xp]) + gamma0 * mat[_x,_xp]**2
-        new_twiss[0] = beta0 * (-mat[_x,_x] * mat[_xp,_x]) + alpha0 * (mat[_x,_x] * mat[_xp,_xp] + mat[_x,_xp] * mat[_xp,_x]) + gamma0 * (-mat[_x,_xp] * mat[_xp,_xp])
+        new_twiss[1] = beta0 * mat[_x, _x]**2 + alpha0 * (-2 * mat[_x, _x] * mat[_x, _xp]) + gamma0 * mat[_x, _xp]**2
+        new_twiss[0] = beta0 * (-mat[_x, _x] * mat[_xp, _x]) + alpha0 * (mat[_x, _x] * mat[_xp, _xp] + mat[_x, _xp] * mat[_xp, _x]) + gamma0 * (-mat[_x, _xp] * mat[_xp, _xp])
         
         return (new_twiss)
     
@@ -80,17 +80,17 @@ class Bunch():
 
         cov_mat = np.zeros((self.dimension, self.dimension))
         
-        cov_mat[_x:_y,_x:_y] = _get_2D_covariance_matrix(self.twiss_x, self.dimension)
-        cov_mat[_y:_tau,_y:_tau] = _get_2D_covariance_matrix(self.twiss_y, self.dimension)
+        cov_mat[_x:_y, _x:_y] = _get_2D_covariance_matrix(self.twiss_x, self.dimension)
+        cov_mat[_y:_tau, _y:_tau] = _get_2D_covariance_matrix(self.twiss_y, self.dimension)
             
         mean = np.zeros((4,), 'd') #[np.sqrt(cov_mat[_x,_x]), np.sqrt(cov_mat[_xp,_xp]), np.sqrt(cov_mat[_y,_y]), np.sqrt(cov_mat[_yp,_yp])]
         
         part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
         
-        self.state[_x,:] = part[_x,:]
-        self.state[_xp,:] = part[_xp,:]
-        self.state[_y,:] = part[_y,:]
-        self.state[_yp,:] = part[_yp,:]
+        self.state[_x, :] = part[_x, :]
+        self.state[_xp, :] = part[_xp, :]
+        self.state[_y, :] = part[_y, :]
+        self.state[_yp, :] = part[_yp, :]
         
         self.update_emittance()
         
@@ -125,10 +125,10 @@ class Bunch():
                 print("The seed number must be an integer greater than 0 and less than 2^32-1.")
         part = np.random.multivariate_normal(mean, cov_mat, self.num_particles).T
         
-        self.state[_x,:] = part[_x,:]
-        self.state[_xp,:] = part[_xp,:]
-        self.state[_y,:] = part[_y,:]
-        self.state[_yp,:] = part[_yp,:]
+        self.state[_x, :] = part[_x, :]
+        self.state[_xp, :] = part[_xp, :]
+        self.state[_y, :] = part[_y, :]
+        self.state[_yp, :] = part[_yp, :]
         
         return self.state
     
