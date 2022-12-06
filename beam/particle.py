@@ -17,41 +17,55 @@ class Particle():
         else:
             print_error('Unknown species {}'.format(self.species))
 
-        self.gamma = self.get_gamma()
-        self.beta = self.get_beta()
-        self.momentum = self.get_momentum()
         self.s = 0
-
-    def get_gamma(self):
-        gamma = 1 + self.energy / self.mass
-        return gamma
+        #self.gamma = 0
+        #self.beta = 0
+        #self.momentum = 0
         
-    def get_beta(self):
-        gamma = self.get_gamma()
-        beta = np.sqrt(gamma * gamma - 1) / gamma     
-        return beta
+        self.update_energy(energy)
+
+    def get_charge(self):
+        return self.charge
     
-    def get_energy(self):
-        return self.energy
+    def get_rest_mass(self):
+        return self.mass
+        
+    def update_gamma(self):
+        self.gamma = 1 + self.energy / self.mass
+    
+    def get_gamma(self):
+        return self.gamma
+        
+    def update_beta(self):
+        gamma = self.get_gamma()
+        self.beta = np.sqrt(gamma * gamma - 1) / gamma     
+    
+    def get_beta(self):
+        return self.beta
+        
+    def update_momentum(self):
+        self.momentum = np.sqrt(self.energy * self.energy - self.mass * self.mass)
         
     def get_momentum(self):
-        momentum = np.sqrt(self.energy * self.energy - self.mass * self.mass)
-        return momentum
+        return self.momentum
     
     def update_energy(self, energy):
         self.energy = energy
-        self.gamma = self.get_gamma()
-        self.beta = self.get_beta()
-        self.momentum = self.get_momentum()
+        self.update_gamma()
+        self.update_beta()
+        self.update_momentum()
         
-    def get_s(self):
-        return self.s
-    
+    def get_energy(self):
+        return self.energy
+        
     def reset_s(self):
         self.s = 0
     
     def update_s(self, length):
         self.s += length
+        
+    def get_s(self):
+        return self.s
     
     def print_particle_properties(self):
         print ("particle species  :", self.species)
