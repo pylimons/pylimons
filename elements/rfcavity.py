@@ -55,7 +55,7 @@ class Rfcavity(Element):
         initial_energy = bunch.particle.get_energy()
         gamma_i = bunch.particle.get_gamma()
         
-        final_energy = initial_energy + np.abs(bunch.particle.charge) * gradient * cos_phase
+        final_energy = initial_energy + np.abs(bunch.particle.charge) * gradient * L * cos_phase
         bunch.particle.update_energy(final_energy)
         gamma_f = bunch.particle.get_gamma()
         
