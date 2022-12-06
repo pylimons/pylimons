@@ -5,3 +5,4 @@ from .quadrupole import *
 from .solenoid import *
 from .marker import *
 from .aperture import *
+from .rfcavity import *

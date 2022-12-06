@@ -5,7 +5,7 @@ from utils.logs import *
 
 class Element(object):
     types = ["drift", "sbend", "rbend", "quadrupole", "sextupole", "octupole", "solenoid", "rfcavity", "marker"]
-    properties = ["name", "type", "length", "strength", "angle", "phi", "k1", "ks", "aperture"]
+    properties = ["name", "type", "length", "strength", "angle", "phi", "k1", "ks", "gradient", "phase", "frequency", "aperture"]
     aperture_types = ["rectangular", "circular", "elliptical"]
     
     def __init__(self, name, elmtype, length=0, strength=0, aperture=[]):
@@ -39,6 +39,7 @@ class Element(object):
     def get_element_property(self, prop):
         if prop.lower() in self.__class__.properties:
             print ("The element's {} is {}".format(prop.lower(), self.element_properties[prop.lower()]))
+            return self.element_properties[prop.lower()]
         else:
             print ("The property {} is not defined".format(prop.lower()))
 
