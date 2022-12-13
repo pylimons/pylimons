@@ -131,3 +131,7 @@ dmypy.json
 
 # h5 data
 *.h5
+
+
+# powerpoint file
+*.pptx
